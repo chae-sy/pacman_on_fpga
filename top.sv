@@ -148,29 +148,37 @@ wire [3:0] init_code;
   wire [5:0] pac_tile_x = (pac_x + 20) / TILE_W; // 0..47
   wire [4:0] pac_tile_y = (pac_y + 20) / TILE_H; // 0..26
   wire [10:0] pac_tile_addr = pac_tile_y * MAP_W + pac_tile_x;
-
-   always @(posedge clk_pix or negedge rstn) begin
+  // Pacman control
+  reg [10:0] pac_tile_addr_reg;
+    // 4) coin_map 초기화 + 팩맨이 지나가면 코인 소멸
+  always @(posedge clk_pix or negedge rstn) begin
     if (!rstn) begin
       init_addr       <= 0;
       init_coins_done <= 0;
       coin_map        <= {COIN_CNT{1'b0}};
+      pac_tile_addr_reg <= 0;
     end else if (!init_coins_done && frame_tick) begin
+      // 초기화 단계: frame_tick마다 한 타일씩
       coin_map[init_addr] <= (init_code == 4'd2);
       if (init_addr == COIN_CNT-1)
         init_coins_done <= 1;
       else
         init_addr <= init_addr + 1;
+      // 팩맨 주소 레지스터는 아직 갱신 안 함
+    end else begin
+      // 초기화 완료 후
+      // 1) 팩맨 위치 tile_addr 레지스터에 저장
+      pac_tile_addr_reg <= pac_tile_addr;
+
+      // 2) 해당 위치에 코인이 있으면 지우기
+      if (coin_map[pac_tile_addr_reg])
+        coin_map[pac_tile_addr_reg] <= 1'b0;
     end
   end
+
   
-  // Pacman control
-  reg [10:0] pac_tile_addr_reg;
-  always @(posedge clk_pix or negedge rstn) begin
-    if (!rstn)
-      pac_tile_addr_reg <= 0;
-    else if (init_coins_done)
-      pac_tile_addr_reg <= pac_tile_addr;
-  end
+
+  
 
   wire [3:0] dummy_tile_code = tile_code;
   pacman_ctrl u_pac (
