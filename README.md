@@ -6,6 +6,8 @@
 This repository contains the RTL design and supporting IPs to simulate a Pacman game at 1920 x 1080 /60 Hz monitor on a Xilinx Artix-7 FPGA(Project device xc7a75tfgg484-1), using Vivado 2018.3.
 
 ## Module Hierarchy
+
+
 top_1080p_vga
 ├─ u_clk (clk_wiz_0.xci)
 ├─ u_vga (vga_controller.sv)
