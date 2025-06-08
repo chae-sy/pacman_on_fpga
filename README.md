@@ -9,17 +9,27 @@ This repository contains the RTL design and supporting IPs to simulate a Pacman 
 
 
 top_1080p_vga
+
 ├─ u_clk (clk_wiz_0.xci)
 
 ├─ u_vga (vga_controller.sv)
+
 ├─ u_btn (push.sv)
+
 ├─ u_map_init (blk_mem_gen_1.xci) ← Initial maze layout (Dual-Port ROM)
+
 ├─ u_map (blk_mem_gen_0.xci) ← Dynamic maze state (Single-Port ROM)
+
 ├─ u_pac (pman_ctrl.sv) ← Pacman controller
+
 ├─ u_enemy (enemy_ctrl.v) ← Enemy controller
+
 ├─ u_map_e0 (blk_mem_gen_0.xci) ← Enemy path memory 0
+
 ├─ u_map_e1 (blk_mem_gen_0.xci) ← Enemy path memory 1
+
 ├─ u_map_e2 (blk_mem_gen_0.xci) ← Enemy path memory 2
+
 ├─ u_map_e3 (blk_mem_gen_0.xci) ← Enemy path memory 3
 
 
