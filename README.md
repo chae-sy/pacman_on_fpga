@@ -10,6 +10,7 @@ This repository contains the RTL design and supporting IPs to simulate a Pacman 
 
 top_1080p_vga
 ├─ u_clk (clk_wiz_0.xci)
+
 ├─ u_vga (vga_controller.sv)
 ├─ u_btn (push.sv)
 ├─ u_map_init (blk_mem_gen_1.xci) ← Initial maze layout (Dual-Port ROM)
